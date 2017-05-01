@@ -9,6 +9,9 @@
       padding:0;
       background:black;
       }
+      div{
+      color:#fff;
+      }
     </style>
   </head>
   <body>
@@ -16,6 +19,17 @@
     <div id="player"></div>
 
     <script>
+
+
+    function getVideoId ()
+    {
+        //item = document.getElementById("player")
+        //item.textContent = "ertertert";
+        //item.textContent = window.location.search.substring(1);
+
+        return window.location.search.substring(1);
+    }
+
       // 2. This code loads the IFrame Player API code asynchronously.
       var tag = document.createElement('script');
 
@@ -30,7 +44,10 @@
         player = new YT.Player('player', {
           height: '200dp',
           width: '100%',
-          videoId: 'M7lc1UVf-VE',
+           playerVars: {
+                    autoplay: 1,
+                    vq: 'hd1080'},
+          videoId: getVideoId(),
           events: {
             'onReady': onPlayerReady,
             'onStateChange': onPlayerStateChange
@@ -54,7 +71,7 @@
         }
       }
       function stopVideo() {
-        player.stopVideo();
+        //player.stopVideo();
       }
     </script>
   </body>

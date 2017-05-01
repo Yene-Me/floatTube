@@ -5,17 +5,24 @@ package tube;
  */
 
 import android.app.ListFragment;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Debug;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ListView;
 
 
-import com.tube.R;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import tube.floatView.*;
+import tube.util.helper;
 
 /**
  * A fragment that shows a static list of videos.
@@ -39,19 +46,19 @@ public class VideoListView {
         }
 
         private PageAdapterClass.PageAdapter adapter;
-        private View videoBox;
+
 
         @Override
-        public void onCreate(Bundle savedInstanceState) {
+        public  void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             adapter = new PageAdapterClass.PageAdapter(getActivity(), VIDEO_LIST);
+
         }
 
         @Override
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
 
-            videoBox = getActivity().findViewById(R.id.video_box);
             getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
             setListAdapter(adapter);
         }
@@ -60,23 +67,12 @@ public class VideoListView {
         public void onListItemClick(ListView l, View v, int position, long id) {
             String videoId = VIDEO_LIST.get(position).videoId;
 
-            VideoPlayerActivity.VideoFragment videoFragment =
-                    (VideoPlayerActivity.VideoFragment) getFragmentManager().findFragmentById(R.id.video_fragment_container);
-            videoFragment.setVideoId(videoId);
+            Log.e("videoId" ,videoId);
+            Intent mIntent = new Intent(getActivity().getApplicationContext(), FloatingWindow.class);
 
-            // The videoBox is INVISIBLE if no video was previously selected, so we need to show it now.
-            if (videoBox.getVisibility() != View.VISIBLE) {
-                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    // Initially translate off the screen so that it can be animated in from below.
-                    videoBox.setTranslationY(videoBox.getHeight());
-                }
-                videoBox.setVisibility(View.VISIBLE);
-            }
+            mIntent.putExtra(helper.VIDEO_ID, videoId);
 
-            // If the fragment is off the screen, we animate it in.
-            if (videoBox.getTranslationY() > 0) {
-                videoBox.animate().translationY(0).setDuration(ANIMATION_DURATION_MILLIS);
-            }
+            getActivity().startService(mIntent);
         }
 
         @Override
