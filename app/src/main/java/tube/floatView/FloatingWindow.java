@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
+import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.Gravity;
@@ -56,14 +57,13 @@ public class FloatingWindow extends Service {
         webView = new WebView(this);
 
 
-
         webView.getSettings().setJavaScriptEnabled(true);
 
         webView.setScrollContainer(false);
 
 
         final LayoutParams parameters = new LayoutParams(
-                600, 650, LayoutParams.TYPE_PHONE,
+                700, 650, LayoutParams.TYPE_PHONE,
                 LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);
 
@@ -98,7 +98,6 @@ public class FloatingWindow extends Service {
         move.setX(200f);
 
 
-
         webView.setLayoutParams(webParameters);
 
         move.setLayoutParams(moveButtonParameters);
@@ -109,6 +108,9 @@ public class FloatingWindow extends Service {
         ll.addView(move);
         wm.addView(ll, parameters);
 
+        webView.getSettings().setDomStorageEnabled(true);
+        webView.getSettings().setDatabaseEnabled(true);
+
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -117,6 +119,10 @@ public class FloatingWindow extends Service {
                 return true;
             }
         });
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            webView.setWebContentsDebuggingEnabled(true);
+        }
 
 
         move.setOnTouchListener(new View.OnTouchListener() {
@@ -169,7 +175,10 @@ public class FloatingWindow extends Service {
 
         video_id = intent.getStringExtra(helper.VIDEO_ID);
         Log.e("video_id1234", video_id);
-        webView.loadUrl("file:///android_asset/index.html?"+video_id);
+
+        String url = "http://lonwrk050.virtuefusion.corp:8080/galabingo/loader-vfbingo.html?isRunningLocally=true&debugServer=true&language=en&region=UK&locale=en-GB&forMoney=true&servletURL=%2Fgalabingo%2Fpigames%2F&secureStaticURL=%2F&gameType=Clover%20Rollover%20SA";
+        //webView.loadUrl("file:///android_asset/index.html?"+video_id);
+        webView.loadUrl(url);
         return super.onStartCommand(intent, flags, startId);
     }
 
