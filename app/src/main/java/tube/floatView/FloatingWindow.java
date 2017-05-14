@@ -176,9 +176,9 @@ public class FloatingWindow extends Service {
         video_id = intent.getStringExtra(helper.VIDEO_ID);
         Log.e("video_id1234", video_id);
 
-        String url = "http://lonwrk050.virtuefusion.corp:8080/galabingo/loader-vfbingo.html?isRunningLocally=true&debugServer=true&language=en&region=UK&locale=en-GB&forMoney=true&servletURL=%2Fgalabingo%2Fpigames%2F&secureStaticURL=%2F&gameType=Clover%20Rollover%20SA";
-        //webView.loadUrl("file:///android_asset/index.html?"+video_id);
-        webView.loadUrl(url);
+        //String url = "http://lonwrk050.virtuefusion.corp:8080/galabingo/loader-vfbingo.html?isRunningLocally=true&debugServer=true&language=en&region=UK&locale=en-GB&forMoney=true&servletURL=%2Fgalabingo%2Fpigames%2F&secureStaticURL=%2F&gameType=Clover%20Rollover%20SA";
+        webView.loadUrl("file:///android_asset/index.html?"+video_id);
+        //webView.loadUrl(url);
         return super.onStartCommand(intent, flags, startId);
     }
 

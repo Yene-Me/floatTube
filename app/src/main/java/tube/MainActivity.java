@@ -29,13 +29,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tube.R;
-
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Locale;
 import java.util.Map;
 
-import tube.model.MenuVideoList;
+import tube.util.helper;
+
 
 /**
  * Created by yene on 01/05/2017.
@@ -49,6 +47,8 @@ public class MainActivity extends Activity {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private String[] mPlanetTitles;
+    private  Map<String,String> mPlayList;
+    private ArrayList<String> viewListName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,13 +63,20 @@ public class MainActivity extends Activity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                Map<String,String> mPlayList = (Map)dataSnapshot.getValue();
+               mPlayList = (Map)dataSnapshot.getValue();
 
-                Log.e("The read: ", "-"+mPlayList.values());
+                viewListName = new ArrayList<>();
 
 
-                /*mDrawerList.setAdapter(new ArrayAdapter<String>(getApplicationContext(),
-                        R.layout.drawer_list_item, mPlayList));*/
+                for (Map.Entry<String, String> entry : mPlayList.entrySet())
+                {
+
+                    Log.e("The read: ", "-"+entry.getKey());
+                    viewListName.add(entry.getKey());
+                }
+
+                mDrawerList.setAdapter(new ArrayAdapter<String>(getApplicationContext(),
+                        R.layout.drawer_list_item, viewListName));
             }
 
             @Override
@@ -172,8 +179,12 @@ public class MainActivity extends Activity {
         // update the main content by replacing fragments
         Fragment fragment = new VideoListView.VideoListFragment();
         Bundle args = new Bundle();
-        //args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
-        fragment.setArguments(args);
+        if(viewListName !=null)
+        {
+            Log.e("position", ""+mPlayList.get(viewListName.get(position)));
+            args.putString(helper.VIDEO_ID, ""+mPlayList.get(viewListName.get(position)));
+            fragment.setArguments(args);
+        }
 
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();

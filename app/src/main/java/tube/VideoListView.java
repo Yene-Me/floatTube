@@ -15,9 +15,21 @@ import android.view.View;
 import android.widget.ListView;
 
 
+import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.http.HttpRequest;
+import com.google.api.client.http.HttpRequestInitializer;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.services.youtube.YouTube;
+import com.google.api.services.youtube.YouTubeScopes;
+import com.google.api.services.youtube.model.SearchListResponse;
+import com.google.api.services.youtube.model.SearchResult;
 
-
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,7 +46,7 @@ public class VideoListView {
         private static final int ANIMATION_DURATION_MILLIS = 300;
 
         static {
-            List<VideoEntryClass.VideoEntry> list = new ArrayList<VideoEntryClass.VideoEntry>();
+            List<VideoEntryClass.VideoEntry> list = new ArrayList<>();
             list.add(new VideoEntryClass.VideoEntry("YouTube Collection", "H4uWOZL4IwQ"));
             list.add(new VideoEntryClass.VideoEntry("GMail Tap", "1KhZKNZO8mQ"));
             list.add(new VideoEntryClass.VideoEntry("Chrome Multitask", "UiLSiqyDf4Y"));
@@ -52,6 +64,13 @@ public class VideoListView {
         public  void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             adapter = new PageAdapterClass.PageAdapter(getActivity(), VIDEO_LIST);
+
+            Bundle bundle = getArguments();
+            if (bundle != null) {
+               Log.e(bundle.getString(helper.VIDEO_ID),"Here is incoming data");
+            }else{
+                Log.e("NOT YET HERE","is NUll");
+            }
 
         }
 
