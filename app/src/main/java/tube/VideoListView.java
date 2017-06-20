@@ -7,6 +7,7 @@ package tube;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Debug;
 import android.util.Log;
@@ -27,7 +28,9 @@ import com.google.api.services.youtube.YouTubeScopes;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -40,22 +43,25 @@ import tube.util.helper;
  * A fragment that shows a static list of videos.
  */
 public class VideoListView {
+
     public static final class VideoListFragment extends ListFragment {
 
 
         private static final int ANIMATION_DURATION_MILLIS = 300;
         private List<VideoEntryClass.VideoEntry> VIDEO_LIST = new ArrayList<>();
-
         private PageAdapterClass.PageAdapter adapter;
-
+        public ReadPlayList readPlayList;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
-
             super.onCreate(savedInstanceState);
-            VIDEO_LIST.add(new VideoEntryClass.VideoEntry("YouTube Collection", "H4uWOZL4IwQ"));
 
+            readPlayList = new ReadPlayList();
+
+           VIDEO_LIST.add(new VideoEntryClass.VideoEntry("YouTube Collection", "H4uWOZL4IwQ"));
             adapter = new PageAdapterClass.PageAdapter(getActivity(), VIDEO_LIST);
+
+            new DownloadFilesTask().execute();
             Bundle bundle = getArguments();
             if (bundle != null) {
                 Log.e(bundle.getString(helper.VIDEO_ID), "Here is incoming data");
@@ -92,5 +98,27 @@ public class VideoListView {
         public void setLabelVisibility(boolean visible) {
             adapter.setLabelVisibility(visible);
         }
+
+        private class DownloadFilesTask extends AsyncTask<URL, Integer, Long> {
+            // Do the long-running work in here
+            protected Long doInBackground(URL... urls) {
+                long totalSize = 0;
+                VIDEO_LIST = readPlayList.loadList();
+                return totalSize;
+            }
+
+            // This is called each time you call publishProgress()
+            protected void onProgressUpdate(Integer... progress) {
+
+            }
+
+            // This is called when doInBackground() is finished
+            protected void onPostExecute(Long result) {
+                adapter = new PageAdapterClass.PageAdapter(getActivity(), VIDEO_LIST);
+                getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+                setListAdapter(adapter);
+            }
+        }
     }
+
 }
