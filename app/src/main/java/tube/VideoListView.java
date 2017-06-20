@@ -56,15 +56,16 @@ public class VideoListView {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
-            readPlayList = new ReadPlayList();
 
-           VIDEO_LIST.add(new VideoEntryClass.VideoEntry("YouTube Collection", "H4uWOZL4IwQ"));
+            VIDEO_LIST.add(new VideoEntryClass.VideoEntry("YouTube Collection", "H4uWOZL4IwQ"));
             adapter = new PageAdapterClass.PageAdapter(getActivity(), VIDEO_LIST);
 
-            new DownloadFilesTask().execute();
+
             Bundle bundle = getArguments();
             if (bundle != null) {
-                Log.e(bundle.getString(helper.VIDEO_ID), "Here is incoming data");
+                Log.e(bundle.getString(helper.VIDEO_ID), "ID: " + bundle.getString(helper.VIDEO_ID));
+                readPlayList = new ReadPlayList(bundle.getString(helper.VIDEO_ID));
+                new DownloadFilesTask().execute();
             } else {
                 Log.e("NOT YET HERE", "is NUll");
             }

@@ -42,11 +42,11 @@ public class ReadPlayList {
 
     private List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube.readonly");
     private List<VideoEntryClass.VideoEntry> VIDEO_LIST = new ArrayList<>();
+    private String channelID = "";
 
-
-    public  ReadPlayList()
+    public  ReadPlayList(String channel)
     {
-
+        this.channelID = channel;
     }
 
     public List<VideoEntryClass.VideoEntry> loadList()
@@ -68,7 +68,7 @@ public class ReadPlayList {
             YouTube.Channels.List channelRequest = youtube.channels().list("contentDetails");
 
             //channelRequest.setMine(false);
-            channelRequest.setId("UC6KKh6eK3DIBMznzBiA4XOw");
+            channelRequest.setId(this.channelID);
             channelRequest.setKey(DeveloperKey.DEVELOPER_KEY);
             channelRequest.setFields("items/contentDetails,nextPageToken,pageInfo");
             ChannelListResponse channelResult = channelRequest.execute();
