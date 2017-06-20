@@ -6,7 +6,9 @@ import android.app.FragmentManager;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -29,9 +31,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tube.R;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Map;
 
+import tube.util.ReadPlayList;
 import tube.util.helper;
 
 
@@ -50,10 +62,24 @@ public class MainActivity extends Activity {
     private  Map<String,String> mPlayList;
     private ArrayList<String> viewListName;
 
+    private ReadPlayList readPlayList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        try {
+           // InputStream inputstream = new FileInputStream(file);
+            readPlayList = new ReadPlayList(getApplicationContext().getAssets().open("google_s.json"));
+        }catch (FileNotFoundException e)
+        {
+            Log.e("ERROR" , e.toString());
+        }catch (IOException e)
+        {
+            Log.e("NO FILE" , e.toString());
+        }
 
         // Get a reference to our posts
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -126,6 +152,7 @@ public class MainActivity extends Activity {
         }
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -193,6 +220,8 @@ public class MainActivity extends Activity {
         mDrawerList.setItemChecked(position, true);
         setTitle(mPlanetTitles[position]);
         mDrawerLayout.closeDrawer(mDrawerList);
+
+        new DownloadFilesTask().execute();
     }
 
     @Override
@@ -218,6 +247,31 @@ public class MainActivity extends Activity {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    private class DownloadFilesTask extends AsyncTask<URL, Integer, Long> {
+        // Do the long-running work in here
+        protected Long doInBackground(URL... urls) {
+            long totalSize = 0;
+
+            try {
+                readPlayList.loadList(getApplicationContext().getAssets().open("google_s.json"));
+            } catch (IOException e) {
+                Log.e("Trace", e.toString());
+            }
+
+            return totalSize;
+        }
+
+        // This is called each time you call publishProgress()
+        protected void onProgressUpdate(Integer... progress) {
+
+        }
+
+        // This is called when doInBackground() is finished
+        protected void onPostExecute(Long result) {
+
+        }
     }
 
 
