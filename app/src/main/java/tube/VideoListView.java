@@ -37,6 +37,7 @@ import java.util.Collections;
 import java.util.List;
 
 import tube.floatView.*;
+import tube.player.VideoPlayer;
 import tube.util.helper;
 
 /**
@@ -81,12 +82,21 @@ public class VideoListView {
         @Override
         public void onListItemClick(ListView l, View v, int position, long id)
         {
-            String videoId = VIDEO_LIST.get(position).videoId;
+            /*String videoId = VIDEO_LIST.get(position).videoId;
 
             Log.e("videoId", videoId);
             Intent mIntent = new Intent(getActivity().getApplicationContext(), FloatingWindow.class);
             mIntent.putExtra(helper.VIDEO_ID, videoId);
-            getActivity().startService(mIntent);
+            getActivity().startService(mIntent);*/
+            Log.e("onListItemClick", "onListItemClick");
+            String videoId = VIDEO_LIST.get(position).videoId;
+
+
+            Intent mIntent = new Intent(getActivity().getApplicationContext(), VideoPlayer.class);
+            mIntent.putExtra(helper.VIDEO_ID, videoId);
+            getActivity().startActivity(mIntent);
+
+
         }
 
         @Override

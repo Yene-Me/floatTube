@@ -19,7 +19,7 @@
     android:layout_height="95dp"
     android:orientation="horizontal"
     android:gravity="center"
-    android:background="#000">
+    android:background="#333">
 
   <com.google.android.youtube.player.YouTubeThumbnailView
       android:id="@+id/thumbnail"
