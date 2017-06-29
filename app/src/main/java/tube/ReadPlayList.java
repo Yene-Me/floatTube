@@ -137,10 +137,10 @@ public class ReadPlayList {
 
         while (playlistEntries.hasNext()) {
             PlaylistItem playlistItem = playlistEntries.next();
-            System.out.println(" video name  = " + playlistItem.getSnippet().getTitle());
+           /* System.out.println(" video name  = " + playlistItem.getSnippet().getTitle());
             System.out.println(" video id    = " + playlistItem.getContentDetails().getVideoId());
             System.out.println(" upload date = " + playlistItem.getSnippet().getPublishedAt());
-            System.out.println("\n-------------------------------------------------------------\n");
+            System.out.println("\n-------------------------------------------------------------\n");*/
             VIDEO_LIST.add(new VideoEntryClass.VideoEntry(playlistItem.getSnippet().getTitle(), playlistItem.getContentDetails().getVideoId()));
         }
     }

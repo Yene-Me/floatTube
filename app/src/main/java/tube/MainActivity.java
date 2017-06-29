@@ -52,7 +52,7 @@ public class MainActivity extends Activity {
     private  Map<String,String> mPlayList;
     private ArrayList<String> viewListName;
 
-
+    final FirebaseDatabase database  = FirebaseDatabase.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +60,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         // Get a reference to our posts
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+
         DatabaseReference ref = database.getReference("playlist");
 
         ref.addValueEventListener(new ValueEventListener() {
@@ -74,13 +74,14 @@ public class MainActivity extends Activity {
 
                 for (Map.Entry<String, String> entry : mPlayList.entrySet())
                 {
-
-                    Log.e("The read: ", "-"+entry.getKey());
                     viewListName.add(entry.getKey());
                 }
 
                 mDrawerList.setAdapter(new ArrayAdapter<String>(getApplicationContext(),
                         R.layout.drawer_list_item, viewListName));
+
+                // default load the first channel from the list
+                selectItem(0);
             }
 
             @Override
@@ -114,7 +115,7 @@ public class MainActivity extends Activity {
                 R.string.drawer_close  /* "close drawer" description for accessibility */
         ) {
             public void onDrawerClosed(View view) {
-                getActionBar().setTitle(mTitle);
+                //getActionBar().setTitle(mTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
@@ -172,6 +173,32 @@ public class MainActivity extends Activity {
         }
     }
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        database.goOffline();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        database.goOffline();
+    }
+
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        database.goOnline();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        database.goOnline();
+    }
+
     /* The click listner for ListView in the navigation drawer */
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
@@ -208,8 +235,8 @@ public class MainActivity extends Activity {
 
     @Override
     public void setTitle(CharSequence title) {
-        mTitle = title;
-        getActionBar().setTitle(mTitle);
+        //mTitle = title;
+        //getActionBar().setTitle(mTitle);
     }
 
     /**
@@ -230,6 +257,8 @@ public class MainActivity extends Activity {
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
+
+
 
 
 
