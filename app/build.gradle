@@ -26,6 +26,8 @@ dependencies {
     compile 'com.google.api-client:google-api-client:1.22.0'
     compile 'com.google.apis:google-api-services-youtube:v3-rev183-1.22.0'
     compile group: 'com.google.oauth-client', name: 'google-oauth-client-jetty', version: '1.11.0-beta'
+    compile 'com.google.android.gms:play-services-ads:10.2.4'
+    compile 'com.google.android.gms:play-services-analytics:10.2.4'
 
 }
 apply plugin: 'com.google.gms.google-services'

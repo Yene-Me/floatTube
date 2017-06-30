@@ -16,7 +16,9 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <string name="youtube_api_demo">Fun Tube</string>
+    <string name="app_name">E-Tube</string>
+
+    <string name="search_hint">Search</string>
 
 
     <string name="videolist_demo_name">Video List</string>

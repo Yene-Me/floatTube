@@ -47,7 +47,6 @@ public class VideoListView {
 
     public static final class VideoListFragment extends ListFragment {
 
-
         private static final int ANIMATION_DURATION_MILLIS = 300;
         private List<VideoEntryClass.VideoEntry> VIDEO_LIST = new ArrayList<>();
         private PageAdapterClass.PageAdapter adapter = null;
@@ -82,20 +81,13 @@ public class VideoListView {
         @Override
         public void onListItemClick(ListView l, View v, int position, long id)
         {
-            /*String videoId = VIDEO_LIST.get(position).videoId;
 
-            Log.e("videoId", videoId);
-            Intent mIntent = new Intent(getActivity().getApplicationContext(), FloatingWindow.class);
-            mIntent.putExtra(helper.VIDEO_ID, videoId);
-            getActivity().startService(mIntent);*/
             Log.e("onListItemClick", "onListItemClick");
             String videoId = VIDEO_LIST.get(position).videoId;
-
 
             Intent mIntent = new Intent(getActivity().getApplicationContext(), VideoPlayer.class);
             mIntent.putExtra(helper.VIDEO_ID, videoId);
             getActivity().startActivity(mIntent);
-
 
         }
 
@@ -111,8 +103,7 @@ public class VideoListView {
 
         public void setLabelVisibility(boolean visible)
         {
-            if(adapter != null)
-            {
+            if (adapter != null) {
                 adapter.setLabelVisibility(visible);
             }
 
