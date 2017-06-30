@@ -83,18 +83,19 @@ public class MainActivity extends Activity {
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {
+    protected void onNewIntent(Intent intent)
+    {
         setIntent(intent);
         searchQuery(intent);
     }
 
     private void searchQuery(Intent intent)
     {
-        // Get the intent, verify the action and get the query
-      ;
+        // Get the intent, verify the action and get the query;
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             //doMySearch(query);
+            SearchItem(query);
             Log.e("The read query: ", "" + query);
         }
     }
@@ -276,7 +277,7 @@ public class MainActivity extends Activity {
         return super.onPrepareOptionsMenu(menu);
     }
 
-   /* @Override
+    @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
         // The action bar home/up action should open or close the drawer.
@@ -284,23 +285,11 @@ public class MainActivity extends Activity {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        // Handle action buttons
-        switch (item.getItemId()) {
-            case R.id.action_websearch:
-                // create intent to perform web search for this planet
-                Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
-                intent.putExtra(SearchManager.QUERY, getActionBar().getTitle());
-                // catch event that there's no activity to handle intent
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(this, R.string.app_not_available, Toast.LENGTH_LONG).show();
-                }
-                return true;
-            default:
+        else
+            {
                 return super.onOptionsItemSelected(item);
         }
-    }*/
+    }
 
 
     @Override
@@ -308,7 +297,7 @@ public class MainActivity extends Activity {
     {
         super.onPause();
         database.goOffline();
-        trackEvents("DB","pause off-Line");
+        trackEvents("DB", "pause off-Line");
     }
 
     @Override
@@ -316,7 +305,7 @@ public class MainActivity extends Activity {
     {
         super.onDestroy();
         database.goOffline();
-        trackEvents("DB","destroy off-Line");
+        trackEvents("DB", "destroy off-Line");
     }
 
 
@@ -325,7 +314,7 @@ public class MainActivity extends Activity {
     {
         super.onRestart();
         database.goOnline();
-        trackEvents("DB","restart off-Line");
+        trackEvents("DB", "restart off-Line");
     }
 
     @Override
@@ -333,7 +322,7 @@ public class MainActivity extends Activity {
     {
         super.onResume();
         database.goOnline();
-        trackEvents("DB","resume on-Line");
+        trackEvents("DB", "resume on-Line");
     }
 
     /* The click listner for ListView in the navigation drawer */
@@ -354,7 +343,7 @@ public class MainActivity extends Activity {
             Log.e("position", "" + mPlayList.get(viewListName.get(position)));
             args.putString(helper.VIDEO_ID, "" + mPlayList.get(viewListName.get(position)));
             fragment.setArguments(args);
-            trackEvents("CurrentView","Video player");
+            trackEvents("CurrentView", "Video player");
         }
 
         FragmentManager fragmentManager = getFragmentManager();
@@ -363,6 +352,20 @@ public class MainActivity extends Activity {
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
         mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
+    private void SearchItem(String term)
+    {
+        Fragment fragment = new VideoListView.VideoListFragment();
+        Bundle args = new Bundle();
+        if(term.length()!=0)
+        {
+            args.putString(helper.VIDEO_SEARCH_TERM, term);
+            fragment.setArguments(args);
+        }
+
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
     }
 
     private void loadPlayList()

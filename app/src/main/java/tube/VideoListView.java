@@ -50,7 +50,8 @@ public class VideoListView {
         private static final int ANIMATION_DURATION_MILLIS = 300;
         private List<VideoEntryClass.VideoEntry> VIDEO_LIST = new ArrayList<>();
         private PageAdapterClass.PageAdapter adapter = null;
-        public ReadPlayList readPlayList;
+        public ReadPlayList readPlayList = null;
+        public SearchList searchList = null;
 
         @Override
         public void onCreate(Bundle savedInstanceState)
@@ -58,8 +59,16 @@ public class VideoListView {
             super.onCreate(savedInstanceState);
             Bundle bundle = getArguments();
             if (bundle != null) {
-                Log.e(bundle.getString(helper.VIDEO_ID), "ID: " + bundle.getString(helper.VIDEO_ID));
-                readPlayList = new ReadPlayList(bundle.getString(helper.VIDEO_ID));
+
+                if(bundle.getString(helper.VIDEO_ID) != null)
+                {
+                    readPlayList = new ReadPlayList(bundle.getString(helper.VIDEO_ID));
+                }
+                else
+                    {
+                        searchList = new SearchList(bundle.getString(helper.VIDEO_SEARCH_TERM));
+                    }
+
                 new DownloadFilesTask().execute();
             } else {
                 Log.e("NOT YET HERE", "is NUll");
@@ -114,7 +123,15 @@ public class VideoListView {
             protected Long doInBackground(URL... urls)
             {
                 long totalSize = 0;
-                VIDEO_LIST = readPlayList.loadList();
+                if(readPlayList !=null)
+                {
+                    VIDEO_LIST = readPlayList.loadList();
+                }
+                else if( searchList != null)
+                {
+                    VIDEO_LIST = searchList.loadList();
+                }
+
                 return totalSize;
             }
 
