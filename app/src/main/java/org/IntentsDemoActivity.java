@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package tube;
+package org;
 
 
 import com.google.android.youtube.player.YouTubeIntents;
-import com.tube.R;
+import hera.yene.org.R;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -34,8 +34,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import tube.adapter.VideoArrayAdapter;
-import tube.adapter.ListViewItem;
+import org.adapter.VideoArrayAdapter;
+import org.adapter.ListViewItem;
 
 /**
  * A sample activity which shows how to use the {@link YouTubeIntents} static methods to create

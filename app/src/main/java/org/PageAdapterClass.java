@@ -1,4 +1,4 @@
-package tube;
+package org;
 
 /**
  * Created by yene on 14/04/2017.
@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
-import com.tube.R;
+import hera.yene.org.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;

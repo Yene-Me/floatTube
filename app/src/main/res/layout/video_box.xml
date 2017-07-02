@@ -15,7 +15,7 @@
     android:onClick="onClickClose"/>
 
 <fragment
-    class="tube.VideoPlayerActivity$VideoFragment"
+    class="org.VideoPlayerActivity$VideoFragment"
     android:id="@+id/video_fragment_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"/>

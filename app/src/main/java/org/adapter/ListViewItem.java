@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package tube.adapter;
+package org.adapter;
 
 /**
  * A single list view item for use with {@link VideoArrayAdapter}.

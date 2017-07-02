@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package tube;
+package org;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -30,11 +30,10 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+import hera.yene.org.R;
 
-import com.tube.R;
-
-import tube.adapter.VideoArrayAdapter;
-import tube.adapter.ListViewItem;
+import org.adapter.VideoArrayAdapter;
+import org.adapter.ListViewItem;
 
 import java.util.ArrayList;
 import java.util.List;

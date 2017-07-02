@@ -1,4 +1,4 @@
-package tube.model;
+package org.model;
 
 /**
  * Created by yeneneh.mulatu on 02/05/2017.

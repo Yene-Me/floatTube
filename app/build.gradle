@@ -3,9 +3,13 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
     buildToolsVersion "25.0.2"
+    dexOptions {
+        preDexLibraries = false
+        javaMaxHeapSize "2g"
+    }
 
     defaultConfig {
-        applicationId "com.float.youtube"
+        applicationId "hera.yene.org"
         minSdkVersion 14
         targetSdkVersion 17
     }
@@ -29,5 +33,11 @@ dependencies {
     compile 'com.google.android.gms:play-services-ads:10.2.4'
     compile 'com.google.android.gms:play-services-analytics:10.2.4'
 
+}
+
+configurations {
+    compile.exclude group: "org.apache.httpcomponents", module: "httpclient"
+    all*.exclude group: 'com.android.support', module: 'support-v4'
+    all*.exclude group: 'com.google.android.gms', module: 'play-services'
 }
 apply plugin: 'com.google.gms.google-services'

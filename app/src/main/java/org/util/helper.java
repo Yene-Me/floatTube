@@ -1,4 +1,4 @@
-package tube.util;
+package org.util;
 
 /**
  * Created by yene on 01/05/2017.

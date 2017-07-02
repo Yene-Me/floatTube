@@ -1,4 +1,4 @@
-package tube.floatView;
+package org.floatView;
 
 import android.app.Service;
 import android.content.Intent;
@@ -18,12 +18,10 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import hera.yene.org.R;
 
-import com.google.android.youtube.player.YouTubePlayerView;
-import com.tube.R;
 
-import tube.DeveloperKey;
-import tube.util.helper;
+import org.util.helper;
 
 public class FloatingWindow extends Service {
 

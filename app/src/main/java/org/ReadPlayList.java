@@ -1,9 +1,6 @@
-package tube;
+package org;
 
 
-import android.util.Log;
-
-import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
@@ -22,11 +19,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.crypto.spec.DESedeKeySpec;
-
-import tube.DeveloperKey;
-import tube.VideoEntryClass;
-import tube.code.Auth;
+import org.code.Auth;
 
 /**
  * Created by yeneneh.mulatu on 20/06/2017.

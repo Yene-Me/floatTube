@@ -7,7 +7,7 @@
     android:layout_gravity="bottom"
     android:orientation="vertical">
   <fragment
-      class="tube.VideoListView$VideoListFragment"
+      class="org.VideoListView$VideoListFragment"
       android:id="@+id/list_fragment"
       android:layout_width="match_parent"
       android:layout_height="match_parent"/>

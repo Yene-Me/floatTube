@@ -1,4 +1,4 @@
-package tube.player;
+package org.player;
 
 /**
  * Created by yeneneh.mulatu on 29/06/2017.
@@ -10,7 +10,7 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.google.android.youtube.player.YouTubePlayer.Provider;
-import com.tube.R;
+import hera.yene.org.R;
 
 import android.os.Bundle;
 import android.webkit.WebSettings;
@@ -18,8 +18,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-import tube.DeveloperKey;
-import tube.util.helper;
+import org.DeveloperKey;
+import org.util.helper;
 
 public class VideoPlayer extends YouTubeBaseActivity implements
         YouTubePlayer.OnInitializedListener {

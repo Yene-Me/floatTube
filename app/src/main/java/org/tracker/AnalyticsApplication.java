@@ -1,4 +1,4 @@
-package tube.tracker;
+package org.tracker;
 
 /**
  * Created by yeneneh.mulatu on 30/06/2017.
@@ -8,7 +8,7 @@ import android.app.Application;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
-import com.tube.R;
+import hera.yene.org.R;
 
 /**
  * This is a subclass of {@link Application} used to provide shared objects for this app, such as
