@@ -10,7 +10,7 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.google.android.youtube.player.YouTubePlayer.Provider;
-import hera.yene.org.R;
+import lite.tube.org.R;
 
 import android.os.Bundle;
 import android.webkit.WebSettings;

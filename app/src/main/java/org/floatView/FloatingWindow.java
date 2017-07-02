@@ -18,7 +18,7 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import hera.yene.org.R;
+import lite.tube.org.R;
 
 
 import org.util.helper;

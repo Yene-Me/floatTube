@@ -18,7 +18,7 @@ package org;
 
 
 import com.google.android.youtube.player.YouTubeIntents;
-import hera.yene.org.R;
+import lite.tube.org.R;
 
 import android.app.Activity;
 import android.content.Intent;

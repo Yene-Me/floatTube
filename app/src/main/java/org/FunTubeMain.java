@@ -30,7 +30,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-import hera.yene.org.R;
+import lite.tube.org.R;
 
 import org.adapter.VideoArrayAdapter;
 import org.adapter.ListViewItem;

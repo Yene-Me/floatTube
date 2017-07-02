@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
-import hera.yene.org.R;
+import lite.tube.org.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
