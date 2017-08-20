@@ -37,6 +37,7 @@ import lite.tube.org.R;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.ExplandList.ExpandList;
 import org.tracker.AnalyticsApplication;
 import org.util.helper;
 
@@ -234,7 +235,7 @@ public class MainActivity extends Activity {
                         R.layout.drawer_list_item, viewListName));
 
                 // default load the first channel from the list
-                selectItem(0);
+                selectItem(-1);
             }
 
 
@@ -331,18 +332,26 @@ public class MainActivity extends Activity {
 
     private void selectItem(int position)
     {
+        FragmentManager fragmentManager = getFragmentManager();
+
         // update the main content by replacing fragments
-        Fragment fragment = new VideoListView.VideoListFragment();
-        Bundle args = new Bundle();
-        if (viewListName != null) {
+
+        if (viewListName != null && position > 0) {
+            Fragment fragment = new VideoListView.VideoListFragment();
+            Bundle args = new Bundle();
             Log.e("position", "" + mPlayList.get(viewListName.get(position)));
             args.putString(helper.VIDEO_ID, "" + mPlayList.get(viewListName.get(position)));
             fragment.setArguments(args);
             trackEvents("CurrentView", "Video player");
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        }
+        else {
+            Fragment fragment = new ExpandList();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
         }
 
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+
 
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);

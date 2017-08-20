@@ -45,7 +45,7 @@ public class VideoPlayer extends YouTubeBaseActivity implements
     private void startWebView()
     {
         WebView webview = (WebView) findViewById(R.id.webview);
-        webview.loadUrl("https://www.google.com");
+        webview.loadUrl("https://www.google.co.uk/search?q="+VIDEO_ID);
 
         WebSettings webSettings = webview.getSettings();
         webSettings.setJavaScriptEnabled(true);

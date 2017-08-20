@@ -7,6 +7,7 @@ import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.Channel;
 import com.google.api.services.youtube.model.ChannelListResponse;
+import com.google.api.services.youtube.model.Playlist;
 import com.google.api.services.youtube.model.PlaylistItem;
 import com.google.api.services.youtube.model.PlaylistItemListResponse;
 import com.google.common.collect.Lists;
@@ -33,9 +34,13 @@ public class ReadPlayList {
      */
     private static YouTube youtube;
 
+    private static final long NUMBER_OF_VIDEOS_RETURNED = 25;
+
     private List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube.readonly");
     private List<VideoEntryClass.VideoEntry> VIDEO_LIST = new ArrayList<>();
     private String channelID = "";
+    // Define a list to store items in the list of uploaded videos.
+    List<PlaylistItem> playlistItemList = new ArrayList<PlaylistItem>();
 
     public  ReadPlayList(String channel)
     {
@@ -75,8 +80,7 @@ public class ReadPlayList {
                 String uploadPlaylistId =
                         channelsList.get(0).getContentDetails().getRelatedPlaylists().getUploads();
 
-                // Define a list to store items in the list of uploaded videos.
-                List<PlaylistItem> playlistItemList = new ArrayList<PlaylistItem>();
+
 
                 // Retrieve the playlist of the channel's uploaded videos.
                 YouTube.PlaylistItems.List playlistItemRequest =
@@ -90,6 +94,7 @@ public class ReadPlayList {
                         "items(contentDetails/videoId,snippet/title,snippet/publishedAt),nextPageToken,pageInfo");
 
                 playlistItemRequest.setKey(DeveloperKey.DEVELOPER_KEY);
+                playlistItemRequest.setMaxResults(NUMBER_OF_VIDEOS_RETURNED);
 
                 String nextToken = "";
 
@@ -107,6 +112,7 @@ public class ReadPlayList {
 
                 // Prints information about the results.
                 prettyPrint(playlistItemList.size(), playlistItemList.iterator());
+                //lazyLoad();
             }
 
         } catch (GoogleJsonResponseException e) {
@@ -138,33 +144,21 @@ public class ReadPlayList {
         }
     }
 
-    // convert InputStream to String
-    private static String getStringFromInputStream(InputStream is) {
+    public List<VideoEntryClass.VideoEntry>  lazyLoad()
+    {
 
-        BufferedReader br = null;
-        StringBuilder sb = new StringBuilder();
-
-        String line;
-        try {
-
-            br = new BufferedReader(new InputStreamReader(is));
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+        if(playlistItemList.iterator().hasNext())
+        {
+            PlaylistItem playlistItem = playlistItemList.iterator().next();
+           /* System.out.println(" video name  = " + playlistItem.getSnippet().getTitle());
+            System.out.println(" video id    = " + playlistItem.getContentDetails().getVideoId());
+            System.out.println(" upload date = " + playlistItem.getSnippet().getPublishedAt());
+            System.out.println("\n-------------------------------------------------------------\n");*/
+            VIDEO_LIST.add(new VideoEntryClass.VideoEntry(playlistItem.getSnippet().getTitle(), playlistItem.getContentDetails().getVideoId()));
         }
 
-        return sb.toString();
-
+        return VIDEO_LIST;
     }
+
+
 }
